@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "c#c",
+    " c "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:copper_block"
+    },
+    "C": {
+      "item": "minecraft:copper_ingot"
+    }
+  },
+  "result": {
+    "item": "some_tech_mod:cogwheel",
+    "count": 2
+  }
+}
