@@ -7,15 +7,19 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import team.voided.quiltenergy.block.entity.EnergizedBlockEntity;
-import team.voided.quiltenergy.energy.*;
+import team.voided.quiltenergy.energy.EnergyContainer;
+import team.voided.quiltenergy.energy.EnergyUnit;
+import team.voided.quiltenergy.energy.IEnergyContainer;
 import team.voided.sometechmod.block.BlockRegistry;
+import team.voided.sometechmod.block.HeatWheelBlock;
+import team.voided.sometechmod.energyunit.STMUnits;
 
 public class HeatWheelEntity extends EnergizedBlockEntity {
 	private int ticksTilUpdate = 0;
 	private int accumulatedHeat;
 
-	public HeatWheelEntity(BlockPos pos, BlockState state) {
-		this(BlockRegistry.HEAT_WHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(EnergyUnits.REDSTONE_FLUX, 500_000), Direction.UP);
+	public HeatWheelEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
+		this(BlockRegistry.HEAT_WHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
 	}
 
 	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {
@@ -26,6 +30,18 @@ public class HeatWheelEntity extends EnergizedBlockEntity {
 	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, EnergyUnit unit, double maxCapacity, Direction... energyTransferAllowed) {
 		super(blockEntityType, blockPos, blockState, unit, maxCapacity, energyTransferAllowed);
 		getContainer().setReceivability(true);
+	}
+
+	public static HeatWheelEntity create(BlockPos pos, BlockState state) {
+		Direction direction = Direction.SOUTH;
+
+		switch (state.getValue(HeatWheelBlock.FACING)) {
+			case SOUTH -> direction = Direction.NORTH;
+			case EAST -> direction = Direction.WEST;
+			case WEST -> direction = Direction.EAST;
+		}
+
+		return new HeatWheelEntity(pos, state, direction);
 	}
 
 	public static void tick(Level level, BlockPos blockPos, BlockState blockState, HeatWheelEntity blockEntity) {

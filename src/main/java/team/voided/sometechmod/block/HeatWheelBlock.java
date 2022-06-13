@@ -36,7 +36,7 @@ public class HeatWheelBlock extends HorizontalDirectionalBlock implements Entity
 	@Override
 	@ParametersAreNonnullByDefault
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new HeatWheelEntity(pos, state);
+		return HeatWheelEntity.create(pos, state);
 	}
 
 	@Override
