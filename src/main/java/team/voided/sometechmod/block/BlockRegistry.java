@@ -7,16 +7,18 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 import team.voided.sometechmod.SomeTechMod;
 import team.voided.sometechmod.block.entity.HeatWheelEntity;
 import team.voided.sometechmod.energyunit.STMUnits;
 import team.voided.sometechmod.item.HeatWheelItem;
+import team.voided.sometechmod.item.groups.SomeTechModTab;
 
 ;
 
 public final class BlockRegistry {
 	public static final Block HEAT_WHEEL_BLOCK = new HeatWheelBlock(BlockBehaviour.Properties.of(Material.METAL));
-	public static final HeatWheelItem HEAT_WHEEL_ITEM = new HeatWheelItem(HEAT_WHEEL_BLOCK, new Item.Properties(), STMUnits.ATMOSPHERIC_EXTRACT);
+	public static final HeatWheelItem HEAT_WHEEL_ITEM = new HeatWheelItem(HEAT_WHEEL_BLOCK, new QuiltItemSettings().group(SomeTechModTab.STM_BLOCKS_TAB), STMUnits.ATMOSPHERIC_EXTRACT);
 
 	public static final BlockEntityType<HeatWheelEntity> HEAT_WHEEL_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(HeatWheelEntity::create, HEAT_WHEEL_BLOCK).build(null);
 
