@@ -2,15 +2,15 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "some_tech_mod:block/heat_wheel/heat_wheel",
-		"1": "some_tech_mod:block/heat_wheel/heat_wheel_body",
-		"particle": "some_tech_mod:block/heat_wheel/heat_wheel"
+      "0": "some_tech_mod:block/heatwheel/heatwheel",
+      "1": "some_tech_mod:block/heatwheel/heatwheel_body",
+      "particle": "some_tech_mod:block/heatwheel/heatwheel"
 	},
 	"elements": [
 		{
-			"from": [0, 0, 7],
-			"to": [16, 16, 16],
-			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 7.5]},
+			"from": [0, 0, 0],
+			"to": [16, 16, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 8, 18]},
 			"faces": {
 				"north": {"uv": [0, 4, 4, 8], "texture": "#1"},
 				"east": {"uv": [4, 0, 6.25, 4], "texture": "#1"},
@@ -22,9 +22,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 6.60761, 0.5],
-			"to": [8.5, 9.39239, 14.5],
-			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 6.60761, 1.5],
+			"to": [8.5, 9.39239, 15.5],
+			"rotation": {"angle": -45, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -36,9 +36,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 6.60761, 0.5],
-			"to": [8.5, 9.39239, 14.5],
-			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 6.60761, 1.5],
+			"to": [8.5, 9.39239, 15.5],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -50,9 +50,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 6.60761, 0.5],
-			"to": [8.5, 9.39239, 14.5],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 6.60761, 1.5],
+			"to": [8.5, 9.39239, 15.5],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -64,9 +64,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 6.60761, 0.5],
-			"to": [8.5, 9.39239, 14.5],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 6.60761, 1.5],
+			"to": [8.5, 9.39239, 15.5],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -78,9 +78,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 6.60761, 0.5],
-			"to": [8.5, 9.39239, 14.5],
-			"rotation": {"angle": 45, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 6.60761, 1.5],
+			"to": [8.5, 9.39239, 15.5],
+			"rotation": {"angle": 45, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -92,9 +92,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 1, 6.10761],
-			"to": [8.5, 15, 8.89239],
-			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 1, 7.10761],
+			"to": [8.5, 15, 9.89239],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -106,9 +106,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 1, 6.10761],
-			"to": [8.5, 15, 8.89239],
-			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 1, 7.10761],
+			"to": [8.5, 15, 9.89239],
+			"rotation": {"angle": 0, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -120,9 +120,9 @@
 		},
 		{
 			"name": "hexadecagon",
-			"from": [7.5, 1, 6.10761],
-			"to": [8.5, 15, 8.89239],
-			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 7.5]},
+			"from": [7.5, 1, 7.10761],
+			"to": [8.5, 15, 9.89239],
+			"rotation": {"angle": 22.5, "axis": "x", "origin": [8, 8, 8.5]},
 			"faces": {
 				"north": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
 				"east": {"uv": [0, 0, 0.25, 0.25], "texture": "#0"},
@@ -135,26 +135,36 @@
 	],
 	"display": {
 		"thirdperson_righthand": {
+			"rotation": [0, -180, 0],
 			"translation": [0, -2, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"thirdperson_lefthand": {
+			"rotation": [0, -180, 0],
 			"translation": [0, -2, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"firstperson_righthand": {
+			"rotation": [0, -180, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"firstperson_lefthand": {
+			"rotation": [0, -180, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"ground": {
-			"rotation": [90, 0, 0],
+			"rotation": [-90, 0, 0],
 			"scale": [0.5, 0.5, 0.5]
 		},
 		"gui": {
-			"rotation": [90, 0, 0],
+			"rotation": [-90, 0, 0],
 			"scale": [0.75, 0.75, 0.75]
+		},
+		"head": {
+			"rotation": [0, -180, 0]
+		},
+		"fixed": {
+			"rotation": [0, -180, 0]
 		}
 	},
 	"groups": [

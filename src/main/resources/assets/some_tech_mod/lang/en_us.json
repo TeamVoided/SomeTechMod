@@ -2,5 +2,6 @@
   "item.some_tech_mod.cogwheel": "cogwheel",
   "item.some_tech_mod.wire": "wire",
   "itemGroup.some_tech_mod.items": "SMT Items",
-  "itemGroup.some_tech_mod.blocks": "SMT Blocks"
+  "itemGroup.some_tech_mod.blocks": "SMT Blocks",
+  "block.some_tech_mod.heatwheel": "wire"
 }
