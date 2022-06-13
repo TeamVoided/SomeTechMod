@@ -2,15 +2,18 @@ package team.voided.sometechmod.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityTypeBuilder;
 import net.minecraft.core.Registry;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import org.quiltmc.qsl.item.group.api.QuiltItemGroup;
 import team.voided.quiltenergy.energy.EnergyUnits;
 import team.voided.sometechmod.SomeTechMod;
 import team.voided.sometechmod.block.entity.HeatWheelEntity;
 import team.voided.sometechmod.item.HeatWheelItem;
+import team.voided.sometechmod.item.groups.SomeTechModTab;
 
 ;
 

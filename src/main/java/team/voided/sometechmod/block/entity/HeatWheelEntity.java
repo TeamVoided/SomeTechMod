@@ -7,10 +7,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import team.voided.quiltenergy.block.entity.EnergizedBlockEntity;
-import team.voided.quiltenergy.energy.EnergyContainer;
-import team.voided.quiltenergy.energy.EnergyUnit;
-import team.voided.quiltenergy.energy.EnergyUnits;
-import team.voided.quiltenergy.energy.IEnergyContainer;
+import team.voided.quiltenergy.energy.*;
 import team.voided.sometechmod.block.BlockRegistry;
 
 public class HeatWheelEntity extends EnergizedBlockEntity {
