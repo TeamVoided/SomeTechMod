@@ -3,5 +3,6 @@
   "item.some_tech_mod.wire": "wire",
   "itemGroup.some_tech_mod.items": "SMT Items",
   "itemGroup.some_tech_mod.blocks": "SMT Blocks",
-  "block.some_tech_mod.heatwheel": "Heatwheel"
+  "block.some_tech_mod.heatwheel": "Heatwheel",
+  "some_tech_mod.energy.unit.aeu": "Atmospheric Extract"
 }
