@@ -1,8 +1,13 @@
 {
   "item.some_tech_mod.cogwheel": "cogwheel",
   "item.some_tech_mod.wire": "wire",
+  "item.some_tech_mod.nether_fiber": "Nether Fiber",
+
+
+  "block.some_tech_mod.heatwheel": "Heatwheel",
+
   "itemGroup.some_tech_mod.items": "SMT Items",
   "itemGroup.some_tech_mod.blocks": "SMT Blocks",
-  "block.some_tech_mod.heatwheel": "Heatwheel",
+
   "some_tech_mod.energy.unit.aeu": "Atmospheric Extract"
 }
