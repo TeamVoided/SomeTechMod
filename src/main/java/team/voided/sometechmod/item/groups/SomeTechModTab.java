@@ -9,5 +9,7 @@ public final class SomeTechModTab {
 
 	public static final QuiltItemGroup SMT_ITEM_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("smt_items")).icon(() -> new ItemStack(ItemRegistry.COGWHEEL)).build();
 
+	public static final QuiltItemGroup SMT_BLOCKS_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("smt_items")).icon(() -> new ItemStack(ItemRegistry.WIRE)).build();
+
 
 }
