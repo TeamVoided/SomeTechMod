@@ -2,9 +2,9 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "some_tech_mod:block/heat_wheel/heat_wheel",
-		"1": "some_tech_mod:block/heat_wheel/heat_wheel_body",
-		"particle": "some_tech_mod:block/heat_wheel/heat_wheel"
+		"0": "some_tech_mod:block/heatwheel/heatwheel",
+		"1": "some_tech_mod:block/heatwheel/heatwheel_body",
+		"particle": "some_tech_mod:block/heatwheel/heatwheel"
 	},
 	"elements": [
 		{

@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "some_tech_mod:block/heatwheel/heatwheel_north", "uvlock": true },
+    "facing=east": { "model": "some_tech_mod:block/heatwheel/heatwheel_east", "uvlock": true },
+    "facing=south": { "model": "some_tech_mod:block/heatwheel/heatwheel_south", "uvlock": true },
+    "facing=west": { "model": "some_tech_mod:block/heatwheel/heatwheel_west", "uvlock": true }
+  }
+}

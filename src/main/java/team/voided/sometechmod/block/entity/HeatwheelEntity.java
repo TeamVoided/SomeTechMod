@@ -13,40 +13,40 @@ import team.voided.quiltenergy.energy.EnergyContainer;
 import team.voided.quiltenergy.energy.EnergyUnit;
 import team.voided.quiltenergy.energy.IEnergyContainer;
 import team.voided.sometechmod.block.BlockRegistry;
-import team.voided.sometechmod.block.HeatWheelBlock;
+import team.voided.sometechmod.block.HeatwheelBlock;
 import team.voided.sometechmod.energyunit.STMUnits;
 
-public class HeatWheelEntity extends EnergizedBlockEntity {
+public class HeatwheelEntity extends EnergizedBlockEntity {
 	private int ticksTilUpdate = 0;
 	private int accumulatedHeat;
 
-	public HeatWheelEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
-		this(BlockRegistry.HEAT_WHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
+	public HeatwheelEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
+		this(BlockRegistry.HEATWHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
 	}
 
-	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {
+	public HeatwheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {
 		super(blockEntityType, blockPos, blockState, container, energyTransferAllowed);
 		getContainer().setReceivability(true);
 	}
 
-	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, EnergyUnit unit, double maxCapacity, Direction... energyTransferAllowed) {
+	public HeatwheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, EnergyUnit unit, double maxCapacity, Direction... energyTransferAllowed) {
 		super(blockEntityType, blockPos, blockState, unit, maxCapacity, energyTransferAllowed);
 		getContainer().setReceivability(true);
 	}
 
-	public static HeatWheelEntity create(BlockPos pos, BlockState state) {
+	public static HeatwheelEntity create(BlockPos pos, BlockState state) {
 		Direction direction = Direction.SOUTH;
 
-		switch (state.getValue(HeatWheelBlock.FACING)) {
+		switch (state.getValue(HeatwheelBlock.FACING)) {
 			case SOUTH -> direction = Direction.NORTH;
 			case EAST -> direction = Direction.WEST;
 			case WEST -> direction = Direction.EAST;
 		}
 
-		return new HeatWheelEntity(pos, state, direction);
+		return new HeatwheelEntity(pos, state, direction);
 	}
 
-	public static void tick(Level level, BlockPos blockPos, BlockState blockState, HeatWheelEntity blockEntity) {
+	public static void tick(Level level, BlockPos blockPos, BlockState blockState, HeatwheelEntity blockEntity) {
 		int heat = 0;
 		if (blockEntity.ticksTilUpdate == 0) {
 			for (int x = -1; x <= 1; x++) {

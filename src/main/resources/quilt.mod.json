@@ -5,10 +5,11 @@
 		"id": "example_mod",
 		"version": "${version}",
 		"metadata": {
-			"name": "Mod Name",
-			"description": "A short description of your mod.",
+			"name": "Some Tech Mod",
+			"description": "a tech mod",
 			"contributors": {
-				"Me!": "Owner"
+				"TheEnderCore": "maker",
+				"DeathLord78": "maker"
 			},
 			"contact": {
 				"homepage": "https://example.com/",

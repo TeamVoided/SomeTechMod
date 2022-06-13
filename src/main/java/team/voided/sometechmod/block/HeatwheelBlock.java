@@ -21,12 +21,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
-import team.voided.sometechmod.block.entity.HeatWheelEntity;
+import team.voided.sometechmod.block.entity.HeatwheelEntity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class HeatWheelBlock extends HorizontalDirectionalBlock implements EntityBlock {
-	public HeatWheelBlock(Properties properties) {
+public class HeatwheelBlock extends HorizontalDirectionalBlock implements EntityBlock {
+	public HeatwheelBlock(Properties properties) {
 		super(properties);
 		registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
@@ -36,7 +36,7 @@ public class HeatWheelBlock extends HorizontalDirectionalBlock implements Entity
 	@Override
 	@ParametersAreNonnullByDefault
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return HeatWheelEntity.create(pos, state);
+		return HeatwheelEntity.create(pos, state);
 	}
 
 	@Override
@@ -49,20 +49,20 @@ public class HeatWheelBlock extends HorizontalDirectionalBlock implements Entity
 	@Override
 	@ParametersAreNonnullByDefault
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-		return type == BlockRegistry.HEAT_WHEEL_ENTITY_TYPE ? (level, blockPos, blockState, blockEntity) -> HeatWheelEntity.tick(level, blockPos, blockState, (HeatWheelEntity) blockEntity) : null;
+		return type == BlockRegistry.HEATWHEEL_ENTITY_TYPE ? (level, blockPos, blockState, blockEntity) -> HeatwheelEntity.tick(level, blockPos, blockState, (HeatwheelEntity) blockEntity) : null;
 	}
 
 	@Override
 	@ParametersAreNonnullByDefault
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
-		if (blockEntity instanceof HeatWheelEntity heatWheel) {
-			ItemStack replace = new ItemStack(BlockRegistry.HEAT_WHEEL_ITEM, 1);
+		if (blockEntity instanceof HeatwheelEntity heatWheel) {
+			ItemStack replace = new ItemStack(BlockRegistry.HEATWHEEL_ITEM, 1);
 
 			player.awardStat(Stats.BLOCK_MINED.get(this));
 			player.causeFoodExhaustion(0.005F);
 
-			BlockRegistry.HEAT_WHEEL_ITEM.setMaxCapacity(replace, heatWheel.getContainer().maxCapacity());
-			BlockRegistry.HEAT_WHEEL_ITEM.setStored(replace, heatWheel.getContainer().stored());
+			BlockRegistry.HEATWHEEL_ITEM.setMaxCapacity(replace, heatWheel.getContainer().maxCapacity());
+			BlockRegistry.HEATWHEEL_ITEM.setStored(replace, heatWheel.getContainer().stored());
 
 			popResource(level, pos, replace);
 		}
