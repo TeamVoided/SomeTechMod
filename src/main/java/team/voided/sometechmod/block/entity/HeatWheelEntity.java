@@ -23,12 +23,12 @@ public class HeatWheelEntity extends EnergizedBlockEntity {
 
 	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {
 		super(blockEntityType, blockPos, blockState, container, energyTransferAllowed);
-		getContainer().canReceive(true);
+		getContainer().setReceivability(true);
 	}
 
 	public HeatWheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, EnergyUnit unit, double maxCapacity, Direction... energyTransferAllowed) {
 		super(blockEntityType, blockPos, blockState, unit, maxCapacity, energyTransferAllowed);
-		getContainer().canReceive(true);
+		getContainer().setReceivability(true);
 	}
 
 	public static void tick(Level level, BlockPos blockPos, BlockState blockState, HeatWheelEntity blockEntity) {
