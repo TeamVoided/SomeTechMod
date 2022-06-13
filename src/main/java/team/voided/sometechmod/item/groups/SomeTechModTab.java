@@ -7,9 +7,9 @@ import team.voided.sometechmod.item.ItemRegistry;
 
 public final class SomeTechModTab {
 
-	public static final QuiltItemGroup STM_ITEM_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("smt_items")).icon(() -> new ItemStack(ItemRegistry.COGWHEEL)).build();
+	public static final QuiltItemGroup STM_ITEM_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("items")).icon(() -> new ItemStack(ItemRegistry.COGWHEEL)).build();
 
-	public static final QuiltItemGroup STM_BLOCKS_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("smt_items")).icon(() -> new ItemStack(ItemRegistry.WIRE)).build();
+	public static final QuiltItemGroup STM_BLOCKS_TAB = QuiltItemGroup.builder(SomeTechMod.modLoc("blocks")).icon(() -> new ItemStack(ItemRegistry.WIRE)).build();
 
 
 }
