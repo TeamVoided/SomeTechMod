@@ -1,6 +1,8 @@
 {
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "some_tech_mod:block/heat_wheel"
+  "variants": {
+    "facing=north": { "model": "some_tech_mod:block/heat_wheel/heat_wheel_north", "uvlock": true },
+    "facing=east": { "model": "some_tech_mod:block/heat_wheel/heat_wheel_east", "uvlock": true },
+    "facing=south": { "model": "some_tech_mod:block/heat_wheel/heat_wheel_south", "uvlock": true },
+    "facing=west": { "model": "some_tech_mod:block/heat_wheel/heat_wheel_west", "uvlock": true }
   }
 }

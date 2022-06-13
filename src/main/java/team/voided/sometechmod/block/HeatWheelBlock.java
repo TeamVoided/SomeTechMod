@@ -1,25 +1,34 @@
 package team.voided.sometechmod.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 import team.voided.sometechmod.block.entity.HeatWheelEntity;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class HeatWheelBlock extends Block implements EntityBlock {
+public class HeatWheelBlock extends HorizontalDirectionalBlock implements EntityBlock {
 	public HeatWheelBlock(Properties properties) {
 		super(properties);
+		registerDefaultState(this.defaultBlockState().setValue(FACING, Direction.NORTH));
 	}
 
 
@@ -28,6 +37,12 @@ public class HeatWheelBlock extends Block implements EntityBlock {
 	@ParametersAreNonnullByDefault
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return new HeatWheelEntity(pos, state);
+	}
+
+	@Override
+	@ParametersAreNonnullByDefault
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FACING);
 	}
 
 	@Nullable
@@ -51,5 +66,36 @@ public class HeatWheelBlock extends Block implements EntityBlock {
 
 			popResource(level, pos, replace);
 		}
+	}
+
+	@Nullable
+	@Override
+	public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+		return defaultBlockState().setValue(FACING, ctx.getHorizontalDirection().getOpposite());
+	}
+
+	@Override
+	@ParametersAreNonnullByDefault
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		Direction direction = state.getValue(FACING);
+
+		switch (direction) {
+			case NORTH -> {
+				return Shapes.join(Block.box(7.5, 0, 0, 8.5, 16, 7), Block.box(0, 0, 7, 16, 16, 16), BooleanOp.OR);
+			} case SOUTH -> {
+				return Shapes.join(Block.box(7.5, 0, 9, 8.5, 16, 16), Block.box(0, 0, 0, 16, 16, 9), BooleanOp.OR);
+			} case EAST -> {
+				return Shapes.join(Block.box(9, 0, 7.5, 16, 16, 8.5), Block.box(0, 0, 0, 9, 16, 16), BooleanOp.OR);
+			} case WEST -> {
+				return Shapes.join(Block.box(0, 0, 7.5, 7, 16, 8.5), Block.box(7, 0, 0, 16, 16, 16), BooleanOp.OR);
+			}
+		}
+
+		return Shapes.join(Block.box(7.5, 0, 0, 8.5, 16, 7), Block.box(0, 0, 7, 16, 16, 16), BooleanOp.OR);
+	}
+
+	@Override
+	public boolean hasDynamicShape() {
+		return true;
 	}
 }
