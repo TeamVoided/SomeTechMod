@@ -2,6 +2,8 @@ package team.voided.sometechmod.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -52,7 +54,7 @@ public class HeatWheelEntity extends EnergizedBlockEntity {
 					for (int z = -1; z <= 1; z++) {
 						BlockState otherState = level.getBlockState(blockPos.offset(x, y, z));
 
-						if (otherState.equals(Blocks.LAVA.defaultBlockState())) {
+						if (otherState.getBlock().equals(Blocks.LAVA)) {
 							heat += 2;
 						} else if (level.isWaterAt(blockPos.offset(x, y, z))) {
 							heat -= 1;
@@ -69,6 +71,11 @@ public class HeatWheelEntity extends EnergizedBlockEntity {
 
 		if (blockEntity.accumulatedHeat <= 0) return;
 
+		level.addParticle(DustParticleOptions.REDSTONE, blockPos.getX()+Mth.nextFloat(level.random, 0, 1), blockPos.getY()+Mth.nextFloat(level.random, 0, 1), blockPos.getZ()+Mth.nextFloat(level.random, 0, 1), 0, 0.2, 0);
 		blockEntity.getContainer().addEnergy(2 * blockEntity.accumulatedHeat);
+	}
+
+	public int getAccumulatedHeat() {
+		return accumulatedHeat;
 	}
 }
