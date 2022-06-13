@@ -21,6 +21,6 @@ public final class RecipeRegistry {
 	}
 
 	private static <S extends RecipeSerializer<T>, C extends Container, T extends Recipe<C>> S register(String id, S serializer) {
-		return Registry.register(Registry.RECIPE_SERIALIZER, id, serializer);
+		return Registry.register(Registry.RECIPE_SERIALIZER, SomeTechMod.modLoc(id), serializer);
 	}
 }
