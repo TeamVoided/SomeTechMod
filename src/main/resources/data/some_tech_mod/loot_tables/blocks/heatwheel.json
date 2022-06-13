@@ -5,7 +5,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "some_tech_mod:heat_wheel"
+          "name": "some_tech_mod:heatwheel"
         }
       ]
     }
