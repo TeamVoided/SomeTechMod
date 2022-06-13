@@ -19,7 +19,7 @@ public class HeatwheelEntity extends EnergizedBlockEntity {
 	private int accumulatedHeat;
 
 	public HeatwheelEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
-		this(BlockRegistry.HEAT_WHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
+		this(BlockRegistry.HEATWHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
 	}
 
 	public HeatwheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {

@@ -49,20 +49,20 @@ public class HeatwheelBlock extends HorizontalDirectionalBlock implements Entity
 	@Override
 	@ParametersAreNonnullByDefault
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
-		return type == BlockRegistry.HEAT_WHEEL_ENTITY_TYPE ? (level, blockPos, blockState, blockEntity) -> HeatwheelEntity.tick(level, blockPos, blockState, (HeatwheelEntity) blockEntity) : null;
+		return type == BlockRegistry.HEATWHEEL_ENTITY_TYPE ? (level, blockPos, blockState, blockEntity) -> HeatwheelEntity.tick(level, blockPos, blockState, (HeatwheelEntity) blockEntity) : null;
 	}
 
 	@Override
 	@ParametersAreNonnullByDefault
 	public void playerDestroy(Level level, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack stack) {
 		if (blockEntity instanceof HeatwheelEntity heatWheel) {
-			ItemStack replace = new ItemStack(BlockRegistry.HEAT_WHEEL_ITEM, 1);
+			ItemStack replace = new ItemStack(BlockRegistry.HEATWHEEL_ITEM, 1);
 
 			player.awardStat(Stats.BLOCK_MINED.get(this));
 			player.causeFoodExhaustion(0.005F);
 
-			BlockRegistry.HEAT_WHEEL_ITEM.setMaxCapacity(replace, heatWheel.getContainer().maxCapacity());
-			BlockRegistry.HEAT_WHEEL_ITEM.setStored(replace, heatWheel.getContainer().stored());
+			BlockRegistry.HEATWHEEL_ITEM.setMaxCapacity(replace, heatWheel.getContainer().maxCapacity());
+			BlockRegistry.HEATWHEEL_ITEM.setStored(replace, heatWheel.getContainer().stored());
 
 			popResource(level, pos, replace);
 		}
