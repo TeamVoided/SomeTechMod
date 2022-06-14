@@ -1,52 +1,11 @@
 package team.voided.sometechmod.container;
 
-import net.minecraft.world.Container;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.CraftingContainer;
 
-public class CrudeConstructingContainer implements Container {
-	@Override
-	public int getContainerSize() {
-		return 0;
-	}
+public class CrudeConstructingContainer extends CraftingContainer {
 
-	@Override
-	public boolean isEmpty() {
-		return false;
-	}
-
-	@Override
-	public ItemStack getItem(int slot) {
-		return null;
-	}
-
-	@Override
-	public ItemStack removeItem(int slot, int amount) {
-		return null;
-	}
-
-	@Override
-	public ItemStack removeItemNoUpdate(int slot) {
-		return null;
-	}
-
-	@Override
-	public void setItem(int slot, ItemStack stack) {
-
-	}
-
-	@Override
-	public void setChanged() {
-
-	}
-
-	@Override
-	public boolean stillValid(Player player) {
-		return false;
-	}
-
-	@Override
-	public void clearContent() {
-
+	public CrudeConstructingContainer(AbstractContainerMenu abstractContainerMenu, int width, int height) {
+		super(abstractContainerMenu, width, height);
 	}
 }
