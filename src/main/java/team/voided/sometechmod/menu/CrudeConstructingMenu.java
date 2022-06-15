@@ -6,7 +6,6 @@ import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
-import team.voided.sometechmod.block.BlockRegistry;
 import team.voided.sometechmod.container.CrudeConstructingContainer;
 
 public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingContainer> {
@@ -90,8 +89,8 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack itemStack = ItemStack.EMPTY;
-		Slot slot = (Slot)this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
+		Slot slot = this.slots.get(index);
+		if (slot.hasItem()) {
 			ItemStack itemStack2 = slot.getItem();
 			itemStack = itemStack2.copy();
 			if (index == 0) {
@@ -138,6 +137,6 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 
 	@Override
 	public boolean stillValid(Player player) {
-		return cla.evaluate((world, pos) -> world.getBlockState(pos).is(BlockRegistry.HEATWHEEL_BLOCK) && player.distanceToSqr((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5) <= 64.0, true);
+		return constructingSlots.stillValid(player);
 	}
 }

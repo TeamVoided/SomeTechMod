@@ -42,7 +42,7 @@ public class WireEntity extends EnergizedBlockEntity {
 
 		if (self.wireState == WireState.NEUTRAL) {
 			self.connected.forEach(entity -> {
-				if (entity instanceof WireEntity) self.getContainer().transferEnergy(entity.getContainer(), 2, Operation.GIVE);
+				if (!(entity instanceof WireEntity)) self.getContainer().transferEnergy(entity.getContainer(), 2, Operation.GIVE);
 			});
 			self.connected.forEach(entity -> {
 				if (entity instanceof WireEntity) self.getContainer().transferEnergy(entity.getContainer(), 2, Operation.RECEIVE);

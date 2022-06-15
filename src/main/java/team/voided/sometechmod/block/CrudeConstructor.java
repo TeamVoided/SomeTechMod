@@ -7,13 +7,12 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import team.voided.sometechmod.menu.CrudeConstructingMenu;
+import team.voided.sometechmod.menu.CrudeConstructingMenuConstructor;
 
 public class CrudeConstructor extends Block {
 	private static final Component CONTAINER_TITLE = Component.translatable("container.constructing.crude");
@@ -35,6 +34,6 @@ public class CrudeConstructor extends Block {
 	@Nullable
 	@Override
 	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-		return new SimpleMenuProvider((syncId, inventory, player) -> new CrudeConstructingMenu(syncId, inventory, ContainerLevelAccess.create(world, pos)), CONTAINER_TITLE);
+		return new SimpleMenuProvider(new CrudeConstructingMenuConstructor(world, pos), CONTAINER_TITLE);
 	}
 }
