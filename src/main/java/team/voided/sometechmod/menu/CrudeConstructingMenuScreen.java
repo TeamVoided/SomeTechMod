@@ -10,11 +10,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import team.voided.sometechmod.SomeTechMod;
 
-public class CrudeConstructingMenuAccess extends AbstractContainerScreen<CrudeConstructingMenu> implements MenuAccess<CrudeConstructingMenu> {
+public class CrudeConstructingMenuScreen extends AbstractContainerScreen<CrudeConstructingMenu> implements MenuAccess<CrudeConstructingMenu> {
 	private final CrudeConstructingMenu menu;
 	public static final ResourceLocation TEXTURE = SomeTechMod.modLoc("textures/gui/container/crude_construct_menu");
 
-	public CrudeConstructingMenuAccess(CrudeConstructingMenu abstractContainerMenu, Inventory inventory, Component component) {
+	public CrudeConstructingMenuScreen(CrudeConstructingMenu abstractContainerMenu, Inventory inventory, Component component) {
 		super(abstractContainerMenu, inventory, component);
 		this.menu = abstractContainerMenu;
 	}
