@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     " C ",
-    "c#c",
-    " c "
+    "C#C",
+    " C "
   ],
   "key": {
     "#": {
       "item": "minecraft:copper_block"
     },
-    "c": {
+    "C": {
       "item": "minecraft:copper_ingot"
     }
   },
