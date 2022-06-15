@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import team.voided.sometechmod.block.BlockRegistry;
 import team.voided.sometechmod.item.ItemRegistry;
+import team.voided.sometechmod.menu.MenuRegistry;
 
 public class SomeTechMod implements ModInitializer {
 	public static final String MOD_ID = "some_tech_mod";
@@ -18,6 +19,7 @@ public class SomeTechMod implements ModInitializer {
 		LOGGER.info("Hello Quilt world from {}!", mod.metadata().name());
 		BlockRegistry.register();
 		ItemRegistry.register();
+		MenuRegistry.register();
 	}
 
 	public static ResourceLocation modLoc(String path) {

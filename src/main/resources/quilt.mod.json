@@ -20,7 +20,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "team.voided.sometechmod.SomeTechMod"
+			"init": "team.voided.sometechmod.SomeTechMod",
+			"client_inti": "team.voided.sometechmod.client.STMClient"
 		},
 		"depends": [
 			{
