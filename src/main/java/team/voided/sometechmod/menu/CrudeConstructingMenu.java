@@ -1,5 +1,7 @@
 package team.voided.sometechmod.menu;
 
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
@@ -7,8 +9,9 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import team.voided.sometechmod.container.CrudeConstructingContainer;
+import team.voided.sometechmod.recipe.RecipeRegistry;
 
-public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingContainer> {
+public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 	private final CrudeConstructingContainer constructingSlots;
 	private final ContainerLevelAccess cla;
 	private final Player player;
@@ -25,7 +28,19 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 
 		addSlot(new Slot(constructingSlots, 0, 32, 26));
 		addSlot(new Slot(constructingSlots, 1, 80, 26));
-		addSlot(new ResultSlot(player, constructingSlots, constructingSlots, 2, 128, 26));
+		addSlot(new ConstructedItemSlot(player, constructingSlots, constructingSlots, 2, 128, 26));
+		addPlayerSlots(inventory, 0, 0);
+	}
+
+	public CrudeConstructingMenu(int i, CrudeConstructingContainer preFilled, Inventory inventory, ContainerLevelAccess cla) {
+		super(MenuRegistry.CRUDE_CONSTRUCTING_MENU_TYPE, i);
+		this.constructingSlots = preFilled;
+		this.cla = cla;
+		this.player = inventory.player;
+
+		addSlot(new Slot(constructingSlots, 0, 32, 26));
+		addSlot(new Slot(constructingSlots, 1, 80, 26));
+		addSlot(new ConstructedItemSlot(player, constructingSlots, constructingSlots, 2, 128, 26));
 		addPlayerSlots(inventory, 0, 0);
 	}
 
@@ -97,7 +112,9 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 
 	@Override
 	public void fillCraftSlotsStackedContents(StackedContents finder) {
-		constructingSlots.fillStackedContents(finder);
+		finder.accountSimpleStack(constructingSlots.getItem(0));
+		finder.accountSimpleStack(constructingSlots.getItem(1));
+		finder.accountSimpleStack(constructingSlots.getItem(2));
 	}
 
 	@Override
@@ -106,7 +123,7 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 	}
 
 	@Override
-	public boolean recipeMatches(Recipe<? super CrudeConstructingContainer> recipe) {
+	public boolean recipeMatches(Recipe<? super Container> recipe) {
 		return cla.evaluate((level, pos) -> recipe.matches(constructingSlots, level), false);
 	}
 
@@ -138,5 +155,76 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 	@Override
 	public boolean shouldMoveToInventory(int index) {
 		return index != getResultSlotIndex();
+	}
+
+	public static class ConstructedItemSlot extends Slot {
+		private final CrudeConstructingContainer craftSlots;
+		private final Player player;
+		private int removeCount;
+
+		public ConstructedItemSlot(Player player, CrudeConstructingContainer craftingContainer, Container container, int i, int j, int k) {
+			super(container, i, j, k);
+			this.player = player;
+			this.craftSlots = craftingContainer;
+		}
+
+		public boolean mayPlace(ItemStack stack) {
+			return false;
+		}
+
+		public ItemStack remove(int amount) {
+			if (this.hasItem()) {
+				this.removeCount += Math.min(amount, this.getItem().getCount());
+			}
+
+			return super.remove(amount);
+		}
+
+		protected void onQuickCraft(ItemStack stack, int amount) {
+			this.removeCount += amount;
+			this.checkTakeAchievements(stack);
+		}
+
+		protected void onSwapCraft(int amount) {
+			this.removeCount += amount;
+		}
+
+		protected void checkTakeAchievements(ItemStack stack) {
+			if (this.removeCount > 0) {
+				stack.onCraftedBy(this.player.level, this.player, this.removeCount);
+			}
+
+			if (this.container instanceof RecipeHolder) {
+				((RecipeHolder)this.container).awardUsedRecipes(this.player);
+			}
+
+			this.removeCount = 0;
+		}
+
+		public void onTake(Player player, ItemStack stack) {
+			this.checkTakeAchievements(stack);
+			NonNullList<ItemStack> nonNullList = player.level.getRecipeManager().getRemainingItemsFor(RecipeRegistry.CRUDE_CONSTRUCTING_RECIPE_TYPE, this.craftSlots, player.level);
+
+			for(int i = 0; i < nonNullList.size(); ++i) {
+				ItemStack itemStack = this.craftSlots.getItem(i);
+				ItemStack itemStack2 = (ItemStack)nonNullList.get(i);
+				if (!itemStack.isEmpty()) {
+					this.craftSlots.removeItem(i, 1);
+					itemStack = this.craftSlots.getItem(i);
+				}
+
+				if (!itemStack2.isEmpty()) {
+					if (itemStack.isEmpty()) {
+						this.craftSlots.setItem(i, itemStack2);
+					} else if (ItemStack.isSame(itemStack, itemStack2) && ItemStack.tagMatches(itemStack, itemStack2)) {
+						itemStack2.grow(itemStack.getCount());
+						this.craftSlots.setItem(i, itemStack2);
+					} else if (!this.player.getInventory().add(itemStack2)) {
+						this.player.drop(itemStack2, false);
+					}
+				}
+			}
+
+		}
 	}
 }

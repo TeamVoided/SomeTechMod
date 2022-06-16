@@ -2,12 +2,14 @@ package team.voided.sometechmod.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -20,6 +22,8 @@ import team.voided.sometechmod.energyunit.STMUnits;
 import team.voided.sometechmod.menu.CrudeConstructingMenu;
 
 public class CrudeConstructorEntity extends EnergizedBlockEntity implements MenuProvider {
+	private final NonNullList<ItemStack> inventory = NonNullList.withSize(3, ItemStack.EMPTY);
+
 	public CrudeConstructorEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
 		this(BlockRegistry.CRUDE_CONSTRUCTOR_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
 	}
@@ -35,7 +39,6 @@ public class CrudeConstructorEntity extends EnergizedBlockEntity implements Menu
 	public static CrudeConstructorEntity create(BlockPos pos, BlockState state) {
 		return new CrudeConstructorEntity(pos, state);
 	}
-
 
 	@Nullable
 	@Override
