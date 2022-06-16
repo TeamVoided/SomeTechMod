@@ -9,5 +9,7 @@
   "itemGroup.some_tech_mod.items": "SMT Items",
   "itemGroup.some_tech_mod.blocks": "SMT Blocks",
 
-  "some_tech_mod.energy.unit.aeu": "Atmospheric Extract"
+  "some_tech_mod.energy.unit.aeu": "Atmospheric Extract",
+
+  "container.crude_constructor.title": "Crude Constructor"
 }

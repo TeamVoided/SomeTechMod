@@ -23,9 +23,9 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 		this.cla = cla;
 		this.player = inventory.player;
 
-		addSlot(new Slot(constructingSlots, 0, 43, 37));
-		addSlot(new Slot(constructingSlots, 1, 79, 37));
-		addSlot(new ResultSlot(player, constructingSlots, constructingSlots, 2, 115, 37));
+		addSlot(new Slot(constructingSlots, 0, 32, 26));
+		addSlot(new Slot(constructingSlots, 1, 80, 26));
+		addSlot(new ResultSlot(player, constructingSlots, constructingSlots, 2, 128, 26));
 		addPlayerSlots(inventory, 0, 0);
 	}
 
@@ -39,51 +39,6 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 		for(j = 0; j < 9; ++j) {
 			this.addSlot(new Slot(inventory, j, 8 + j * 18, 142));
 		}
-	}
-
-	@Override
-	public void fillCraftSlotsStackedContents(StackedContents finder) {
-		constructingSlots.fillStackedContents(finder);
-	}
-
-	@Override
-	public void clearCraftingContent() {
-		constructingSlots.clearContent();
-	}
-
-	@Override
-	public boolean recipeMatches(Recipe<? super CrudeConstructingContainer> recipe) {
-		return recipe.matches(constructingSlots, player.level);
-	}
-
-	@Override
-	public int getResultSlotIndex() {
-		return 2;
-	}
-
-	@Override
-	public int getGridWidth() {
-		return constructingSlots.getWidth();
-	}
-
-	@Override
-	public int getGridHeight() {
-		return constructingSlots.getHeight();
-	}
-
-	@Override
-	public int getSize() {
-		return 3;
-	}
-
-	@Override
-	public RecipeBookType getRecipeBookType() {
-		return RecipeBookType.CRAFTING;
-	}
-
-	@Override
-	public boolean shouldMoveToInventory(int index) {
-		return index != getResultSlotIndex();
 	}
 
 	@Override
@@ -138,5 +93,50 @@ public class CrudeConstructingMenu extends RecipeBookMenu<CrudeConstructingConta
 	@Override
 	public boolean stillValid(Player player) {
 		return constructingSlots.stillValid(player);
+	}
+
+	@Override
+	public void fillCraftSlotsStackedContents(StackedContents finder) {
+		constructingSlots.fillStackedContents(finder);
+	}
+
+	@Override
+	public void clearCraftingContent() {
+		constructingSlots.clearContent();
+	}
+
+	@Override
+	public boolean recipeMatches(Recipe<? super CrudeConstructingContainer> recipe) {
+		return cla.evaluate((level, pos) -> recipe.matches(constructingSlots, level), false);
+	}
+
+	@Override
+	public int getResultSlotIndex() {
+		return 2;
+	}
+
+	@Override
+	public int getGridWidth() {
+		return 3;
+	}
+
+	@Override
+	public int getGridHeight() {
+		return 1;
+	}
+
+	@Override
+	public int getSize() {
+		return 3;
+	}
+
+	@Override
+	public RecipeBookType getRecipeBookType() {
+		return RecipeBookType.CRAFTING;
+	}
+
+	@Override
+	public boolean shouldMoveToInventory(int index) {
+		return index != getResultSlotIndex();
 	}
 }

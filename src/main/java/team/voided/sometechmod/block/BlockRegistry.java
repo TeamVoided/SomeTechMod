@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import org.quiltmc.qsl.item.setting.api.QuiltItemSettings;
 import team.voided.sometechmod.SomeTechMod;
+import team.voided.sometechmod.block.entity.CrudeConstructorEntity;
 import team.voided.sometechmod.block.entity.HeatwheelEntity;
 import team.voided.sometechmod.energyunit.STMUnits;
 import team.voided.sometechmod.item.HeatwheelItem;
@@ -25,6 +26,7 @@ public final class BlockRegistry {
 	public static final BlockItem CRUDE_CONSTRUCTOR_ITEM = new BlockItem(CRUDE_CONSTRUCTOR, new Item.Properties().tab(STMTabs.STM_BLOCKS_TAB));
 
 	public static final BlockEntityType<HeatwheelEntity> HEATWHEEL_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(HeatwheelEntity::create, HEATWHEEL_BLOCK).build(null);
+	public static final BlockEntityType<CrudeConstructorEntity> CRUDE_CONSTRUCTOR_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(CrudeConstructorEntity::create).build(null);
 
 	public static void register() {
 		Registry.register(Registry.BLOCK, SomeTechMod.modLoc("heatwheel"), HEATWHEEL_BLOCK);
@@ -32,5 +34,6 @@ public final class BlockRegistry {
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, SomeTechMod.modLoc("heatwheel"), HEATWHEEL_ENTITY_TYPE);
 		Registry.register(Registry.BLOCK, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR);
 		Registry.register(Registry.ITEM, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR_ITEM);
+		Registry.register(Registry.BLOCK_ENTITY_TYPE, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR_ENTITY_TYPE);
 	}
 }
