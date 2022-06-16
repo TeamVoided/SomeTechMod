@@ -1,5 +1,6 @@
 package team.voided.sometechmod;
 
+import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import org.quiltmc.loader.api.ModContainer;
 import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import team.voided.sometechmod.block.BlockRegistry;
 import team.voided.sometechmod.item.ItemRegistry;
 import team.voided.sometechmod.menu.MenuRegistry;
+import team.voided.sometechmod.recipe.CrudeConstructingRecipe;
 
 public class SomeTechMod implements ModInitializer {
 	public static final String MOD_ID = "some_tech_mod";
@@ -20,6 +22,9 @@ public class SomeTechMod implements ModInitializer {
 		BlockRegistry.register();
 		ItemRegistry.register();
 		MenuRegistry.register();
+
+		Registry.register(Registry.RECIPE_TYPE, CrudeConstructingRecipe.Type.LOCATION, CrudeConstructingRecipe.Type.INSTANCE);
+		Registry.register(Registry.RECIPE_SERIALIZER, CrudeConstructingRecipe.Type.LOCATION, CrudeConstructingRecipe.Serializer.INSTANCE);
 	}
 
 	public static ResourceLocation modLoc(String path) {

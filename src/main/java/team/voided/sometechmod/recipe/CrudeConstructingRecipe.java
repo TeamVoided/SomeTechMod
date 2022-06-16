@@ -8,6 +8,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -16,11 +17,11 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import team.voided.sometechmod.container.CrudeConstructingContainer;
+import team.voided.sometechmod.SomeTechMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class CrudeConstructingRecipe implements Recipe<CrudeConstructingContainer> {
+public class CrudeConstructingRecipe implements Recipe<Container> {
 	private final ResourceLocation location;
 	private final Ingredient slot1;
 	private final Ingredient slot2;
@@ -35,13 +36,13 @@ public class CrudeConstructingRecipe implements Recipe<CrudeConstructingContaine
 
 	@Override
 	@ParametersAreNonnullByDefault
-	public boolean matches(CrudeConstructingContainer inventory, Level world) {
+	public boolean matches(Container inventory, Level world) {
 		return slot1.test(inventory.getItem(0)) && slot2.test(inventory.getItem(1));
 	}
 
 	@Override
 	@ParametersAreNonnullByDefault
-	public ItemStack assemble(CrudeConstructingContainer inventory) {
+	public ItemStack assemble(Container inventory) {
 		return this.result.copy();
 	}
 
@@ -62,12 +63,12 @@ public class CrudeConstructingRecipe implements Recipe<CrudeConstructingContaine
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return RecipeRegistry.CRUDE_CONSTRUCTING_RECIPE_SERIALIZER;
+		return Serializer.INSTANCE;
 	}
 
 	@Override
 	public RecipeType<?> getType() {
-		return RecipeRegistry.CRUDE_CONSTRUCTING_RECIPE_TYPE;
+		return Type.INSTANCE;
 	}
 
 	@Override
@@ -80,7 +81,16 @@ public class CrudeConstructingRecipe implements Recipe<CrudeConstructingContaine
 		return ingredients;
 	}
 
+	public static class Type implements RecipeType<CrudeConstructingRecipe> {
+		private Type() {}
+
+		public static final ResourceLocation LOCATION = SomeTechMod.modLoc("crude_constructing");
+		public static final Type INSTANCE = new Type();
+	}
+
 	public static class Serializer implements RecipeSerializer<CrudeConstructingRecipe> {
+		public static final Serializer INSTANCE = new Serializer();
+
 		@Override
 		@ParametersAreNonnullByDefault
 		public CrudeConstructingRecipe fromJson(ResourceLocation id, JsonObject json) {

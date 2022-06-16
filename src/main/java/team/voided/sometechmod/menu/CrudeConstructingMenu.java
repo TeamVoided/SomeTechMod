@@ -9,10 +9,10 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import team.voided.sometechmod.container.CrudeConstructingContainer;
-import team.voided.sometechmod.recipe.RecipeRegistry;
+import team.voided.sometechmod.recipe.CrudeConstructingRecipe;
 
 public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
-	private final CrudeConstructingContainer constructingSlots;
+	private final Container constructingSlots;
 	private final ContainerLevelAccess cla;
 	private final Player player;
 
@@ -32,9 +32,10 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 		addPlayerSlots(inventory, 0, 0);
 	}
 
-	public CrudeConstructingMenu(int i, CrudeConstructingContainer preFilled, Inventory inventory, ContainerLevelAccess cla) {
+	public CrudeConstructingMenu(int i, Container preFilled, Inventory inventory, ContainerLevelAccess cla) {
 		super(MenuRegistry.CRUDE_CONSTRUCTING_MENU_TYPE, i);
 		this.constructingSlots = preFilled;
+
 		this.cla = cla;
 		this.player = inventory.player;
 
@@ -58,51 +59,25 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 
 	@Override
 	public ItemStack quickMoveStack(Player player, int index) {
-		ItemStack itemStack = ItemStack.EMPTY;
-		Slot slot = this.slots.get(index);
-		if (slot.hasItem()) {
-			ItemStack itemStack2 = slot.getItem();
-			itemStack = itemStack2.copy();
-			if (index == 0) {
-				this.cla.execute((world, pos) -> {
-					itemStack2.getItem().onCraftedBy(itemStack2, world, player);
-				});
-				if (!this.moveItemStackTo(itemStack2, 10, 46, true)) {
-					return ItemStack.EMPTY;
-				}
+		final NonNullList<Slot> slots = this.slots;
+		final Slot clickedSlot = slots.get(index);
+		if (!clickedSlot.hasItem()) return ItemStack.EMPTY;
 
-				slot.onQuickCraft(itemStack2, itemStack);
-			} else if (index >= 10 && index < 46) {
-				if (!this.moveItemStackTo(itemStack2, 1, 10, false)) {
-					if (index < 37) {
-						if (!this.moveItemStackTo(itemStack2, 37, 46, false)) {
-							return ItemStack.EMPTY;
-						}
-					} else if (!this.moveItemStackTo(itemStack2, 10, 37, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-			} else if (!this.moveItemStackTo(itemStack2, 10, 46, false)) {
-				return ItemStack.EMPTY;
-			}
+		final var clickedStack = clickedSlot.getItem();
 
-			if (itemStack2.isEmpty()) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-			}
-
-			if (itemStack2.getCount() == itemStack.getCount()) {
-				return ItemStack.EMPTY;
-			}
-
-			slot.onTake(player, itemStack2);
-			if (index == 0) {
-				player.drop(itemStack2, false);
-			}
+		if (index < 3) {
+			if (!moveItemStackTo(clickedStack, 3, slots.size(), false)) return ItemStack.EMPTY;
+		} else {
+			if (!moveItemStackTo(clickedStack, 0, 3, false)) return ItemStack.EMPTY;
 		}
 
-		return itemStack;
+		if (clickedStack.isEmpty()) {
+			clickedSlot.set(ItemStack.EMPTY);
+		} else {
+			clickedSlot.setChanged();
+		}
+
+		return clickedStack;
 	}
 
 	@Override
@@ -158,11 +133,11 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 	}
 
 	public static class ConstructedItemSlot extends Slot {
-		private final CrudeConstructingContainer craftSlots;
+		private final Container craftSlots;
 		private final Player player;
 		private int removeCount;
 
-		public ConstructedItemSlot(Player player, CrudeConstructingContainer craftingContainer, Container container, int i, int j, int k) {
+		public ConstructedItemSlot(Player player, Container craftingContainer, Container container, int i, int j, int k) {
 			super(container, i, j, k);
 			this.player = player;
 			this.craftSlots = craftingContainer;
@@ -203,7 +178,7 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 
 		public void onTake(Player player, ItemStack stack) {
 			this.checkTakeAchievements(stack);
-			NonNullList<ItemStack> nonNullList = player.level.getRecipeManager().getRemainingItemsFor(RecipeRegistry.CRUDE_CONSTRUCTING_RECIPE_TYPE, this.craftSlots, player.level);
+			NonNullList<ItemStack> nonNullList = player.level.getRecipeManager().getRemainingItemsFor(CrudeConstructingRecipe.Type.INSTANCE, this.craftSlots, player.level);
 
 			for(int i = 0; i < nonNullList.size(); ++i) {
 				ItemStack itemStack = this.craftSlots.getItem(i);
