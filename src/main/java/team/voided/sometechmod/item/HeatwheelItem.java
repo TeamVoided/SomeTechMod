@@ -10,7 +10,7 @@ import team.voided.sometechmod.block.entity.HeatwheelEntity;
 
 public class HeatwheelItem extends EnergizedBlockItem {
 	public HeatwheelItem(Block block, Properties properties, EnergyUnit unit) {
-		super(block, properties, unit);
+		super(block, properties, unit, 500_000);
 	}
 
 	@Override
@@ -22,7 +22,7 @@ public class HeatwheelItem extends EnergizedBlockItem {
 		BlockEntity entity = context.getLevel().getBlockEntity(context.getClickedPos());
 
 		if (entity instanceof HeatwheelEntity heatWheel) {
-			heatWheel.getContainer().addEnergy(getStored(context.getItemInHand()));
+			heatWheel.getContainer().addEnergy(stored(context.getItemInHand()));
 		} else return InteractionResult.FAIL;
 
 		return InteractionResult.SUCCESS;

@@ -182,7 +182,7 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 
 			for(int i = 0; i < nonNullList.size(); ++i) {
 				ItemStack itemStack = this.craftSlots.getItem(i);
-				ItemStack itemStack2 = (ItemStack)nonNullList.get(i);
+				ItemStack itemStack2 = nonNullList.get(i);
 				if (!itemStack.isEmpty()) {
 					this.craftSlots.removeItem(i, 1);
 					itemStack = this.craftSlots.getItem(i);

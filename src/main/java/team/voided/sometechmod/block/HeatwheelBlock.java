@@ -61,8 +61,7 @@ public class HeatwheelBlock extends HorizontalDirectionalBlock implements Entity
 			player.awardStat(Stats.BLOCK_MINED.get(this));
 			player.causeFoodExhaustion(0.005F);
 
-			BlockRegistry.HEATWHEEL_ITEM.setMaxCapacity(replace, heatWheel.getContainer().maxCapacity());
-			BlockRegistry.HEATWHEEL_ITEM.setStored(replace, heatWheel.getContainer().stored());
+			BlockRegistry.HEATWHEEL_ITEM.setEnergy(replace, heatWheel.getContainer().stored());
 
 			popResource(level, pos, replace);
 		}

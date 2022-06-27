@@ -11,17 +11,17 @@ import net.minecraft.world.level.block.state.BlockState;
 import team.voided.quiltenergy.block.entity.EnergizedBlockEntity;
 import team.voided.quiltenergy.energy.EnergyContainer;
 import team.voided.quiltenergy.energy.EnergyUnit;
+import team.voided.quiltenergy.energy.EnergyUnits;
 import team.voided.quiltenergy.energy.IEnergyContainer;
 import team.voided.sometechmod.block.BlockRegistry;
 import team.voided.sometechmod.block.HeatwheelBlock;
-import team.voided.sometechmod.energyunit.STMUnits;
 
 public class HeatwheelEntity extends EnergizedBlockEntity {
 	private int ticksTilUpdate = 0;
 	private int accumulatedHeat;
 
 	public HeatwheelEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
-		this(BlockRegistry.HEATWHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(STMUnits.ATMOSPHERIC_EXTRACT, 500_000), energyTransferAllowed);
+		this(BlockRegistry.HEATWHEEL_ENTITY_TYPE, pos, state, new EnergyContainer(EnergyUnits.QUILT_ENERGY, 500_000), energyTransferAllowed);
 	}
 
 	public HeatwheelEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState, IEnergyContainer container, Direction... energyTransferAllowed) {
