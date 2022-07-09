@@ -22,17 +22,19 @@ import team.voided.sometechmod.SomeTechMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class CrudeConstructingRecipe implements Recipe<Container> {
+public class ConstructingRecipe implements Recipe<Container> {
 	private final ResourceLocation location;
 	private final Ingredient slot1;
 	private final Ingredient slot2;
 	private final ItemStack result;
+	private final int tier;
 
-	public CrudeConstructingRecipe(ResourceLocation location, Ingredient slot1, Ingredient slot2, ItemStack result) {
+	public ConstructingRecipe(ResourceLocation location, Ingredient slot1, Ingredient slot2, ItemStack result, int tier) {
 		this.location = location;
 		this.slot1 = slot1;
 		this.slot2 = slot2;
 		this.result = result;
+		this.tier = tier;
 	}
 
 	@Override
@@ -83,24 +85,29 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 		return ingredients;
 	}
 
-	public static class Type implements RecipeType<CrudeConstructingRecipe> {
+	public int getTier() {
+		return tier;
+	}
+
+	public static class Type implements RecipeType<ConstructingRecipe> {
 		private Type() {}
 
-		public static final ResourceLocation LOCATION = SomeTechMod.modLoc("crude_constructing");
+		public static final ResourceLocation LOCATION = SomeTechMod.modLoc("constructing");
 		public static final Type INSTANCE = new Type();
 	}
 
-	public static class Serializer implements QuiltRecipeSerializer<CrudeConstructingRecipe> {
+	public static class Serializer implements QuiltRecipeSerializer<ConstructingRecipe> {
 		public static final Serializer INSTANCE = new Serializer();
 
 		@Override
 		@ParametersAreNonnullByDefault
-		public CrudeConstructingRecipe fromJson(ResourceLocation id, JsonObject json) {
+		public ConstructingRecipe fromJson(ResourceLocation id, JsonObject json) {
 			Ingredient slot1 = Ingredient.fromJson(json.get("slot1"));
 			Ingredient slot2 = Ingredient.fromJson(json.get("slot2"));
 			ItemStack result = itemStackFromJson(json.getAsJsonObject("result"));
+			int tier = json.get("tier").getAsInt();
 
-			return new CrudeConstructingRecipe(id, slot1, slot2, result);
+			return new ConstructingRecipe(id, slot1, slot2, result, tier);
 		}
 
 		public static ItemStack itemStackFromJson(JsonObject json) {
@@ -129,24 +136,26 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 
 		@Override
 		@ParametersAreNonnullByDefault
-		public CrudeConstructingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
+		public ConstructingRecipe fromNetwork(ResourceLocation id, FriendlyByteBuf buf) {
 			Ingredient slot1 = Ingredient.fromNetwork(buf);
 			Ingredient slot2 = Ingredient.fromNetwork(buf);
 			ItemStack result = buf.readItem();
+			int tier = buf.readInt();
 
-			return new CrudeConstructingRecipe(id, slot1, slot2, result);
+			return new ConstructingRecipe(id, slot1, slot2, result, tier);
 		}
 
 		@Override
 		@ParametersAreNonnullByDefault
-		public void toNetwork(FriendlyByteBuf buf, CrudeConstructingRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buf, ConstructingRecipe recipe) {
 			recipe.slot1.toNetwork(buf);
 			recipe.slot2.toNetwork(buf);
 			buf.writeItem(recipe.result);
+			buf.writeInt(recipe.tier);
 		}
 
 		@Override
-		public JsonObject toJson(CrudeConstructingRecipe recipe) {
+		public JsonObject toJson(ConstructingRecipe recipe) {
 			JsonObject json = new JsonObject();
 			JsonObject result = new JsonObject();
 
@@ -158,6 +167,7 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 			json.add("slot1", recipe.slot1.toJson());
 			json.add("slot2", recipe.slot2.toJson());
 			json.add("result", result);
+			json.addProperty("tier", recipe.tier);
 
 			return json;
 		}

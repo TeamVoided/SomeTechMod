@@ -9,19 +9,19 @@ import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import team.voided.sometechmod.container.CrudeConstructingContainer;
-import team.voided.sometechmod.recipe.CrudeConstructingRecipe;
+import team.voided.sometechmod.recipe.ConstructingRecipe;
 
-public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
+public class ConstructingMenu extends RecipeBookMenu<Container> {
 	private final Container constructingSlots;
 	private final ContainerLevelAccess cla;
 	private final Player player;
 
-	public CrudeConstructingMenu(int i, Inventory inventory) {
+	public ConstructingMenu(int i, Inventory inventory) {
 		this(i, inventory, ContainerLevelAccess.NULL);
 	}
 
-	public CrudeConstructingMenu(int i, Inventory inventory, ContainerLevelAccess cla) {
-		super(MenuRegistry.CRUDE_CONSTRUCTING_MENU_TYPE, i);
+	public ConstructingMenu(int i, Inventory inventory, ContainerLevelAccess cla) {
+		super(MenuRegistry.CONSTRUCTING_MENU_TYPE, i);
 		this.constructingSlots = new CrudeConstructingContainer(this, 3, 1);
 		this.cla = cla;
 		this.player = inventory.player;
@@ -32,8 +32,8 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 		addPlayerSlots(inventory, 0, 0);
 	}
 
-	public CrudeConstructingMenu(int i, Container preFilled, Inventory inventory, ContainerLevelAccess cla) {
-		super(MenuRegistry.CRUDE_CONSTRUCTING_MENU_TYPE, i);
+	public ConstructingMenu(int i, Container preFilled, Inventory inventory, ContainerLevelAccess cla) {
+		super(MenuRegistry.CONSTRUCTING_MENU_TYPE, i);
 		this.constructingSlots = preFilled;
 
 		this.cla = cla;
@@ -180,7 +180,7 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 
 		public void onTake(Player player, ItemStack stack) {
 			this.checkTakeAchievements(stack);
-			NonNullList<ItemStack> nonNullList = player.level.getRecipeManager().getRemainingItemsFor(CrudeConstructingRecipe.Type.INSTANCE, this.craftSlots, player.level);
+			NonNullList<ItemStack> nonNullList = player.level.getRecipeManager().getRemainingItemsFor(ConstructingRecipe.Type.INSTANCE, this.craftSlots, player.level);
 
 			for(int i = 0; i < nonNullList.size(); ++i) {
 				ItemStack itemStack = this.craftSlots.getItem(i);

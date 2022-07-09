@@ -2,6 +2,8 @@ package team.voided.sometechmod.block.entity;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -10,6 +12,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -20,9 +23,10 @@ import team.voided.quiltenergy.energy.EnergyContainer;
 import team.voided.quiltenergy.energy.EnergyUnit;
 import team.voided.quiltenergy.energy.EnergyUnits;
 import team.voided.quiltenergy.energy.IEnergyContainer;
+import team.voided.sometechmod.SomeTechMod;
 import team.voided.sometechmod.block.BlockRegistry;
-import team.voided.sometechmod.menu.CrudeConstructingMenu;
-import team.voided.sometechmod.recipe.CrudeConstructingRecipe;
+import team.voided.sometechmod.menu.ConstructingMenu;
+import team.voided.sometechmod.recipe.ConstructingRecipe;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
@@ -44,9 +48,11 @@ public class CrudeConstructorEntity extends EnergizedBlockEntity {
 
 	public static void tick(Level level, BlockPos blockPos, BlockState blockState, CrudeConstructorEntity self) {
 		RecipeManager manager = level.getRecipeManager();
-		Optional<CrudeConstructingRecipe> recipe = manager.getRecipeFor(CrudeConstructingRecipe.Type.INSTANCE, self.getInv(), level);
+		Optional<ConstructingRecipe> recipe = manager.getRecipeFor(ConstructingRecipe.Type.INSTANCE, self.getInv(), level);
 
-		recipe.ifPresent(crudeConstructingRecipe -> crudeConstructingRecipe.assemble(self.getInv()));
+		recipe.ifPresent(crudeConstructingRecipe -> {
+			if (crudeConstructingRecipe.getTier() >= 0) crudeConstructingRecipe.assemble(self.getInv());
+		});
 	}
 
 	public static CrudeConstructorEntity create(BlockPos pos, BlockState state) {
@@ -55,6 +61,27 @@ public class CrudeConstructorEntity extends EnergizedBlockEntity {
 
 	public Container getInv() {
 		return inv;
+	}
+
+	@Override
+	protected void saveAdditional(CompoundTag nbt) {
+		nbt.putString("slot0_item", Registry.ITEM.getKey(inv.getItem(0).getItem()).toString());
+		nbt.putInt("slot0_size", inv.getItem(0).getCount());
+		nbt.putString("slot1_item", Registry.ITEM.getKey(inv.getItem(1).getItem()).toString());
+		nbt.putInt("slot1_size", inv.getItem(1).getCount());
+		nbt.putString("slot2_item", Registry.ITEM.getKey(inv.getItem(2).getItem()).toString());
+		nbt.putInt("slot2_size", inv.getItem(2).getCount());
+	}
+
+	@Override
+	public void load(CompoundTag nbt) {
+		ItemStack slot0 = new ItemStack(Registry.ITEM.get(SomeTechMod.fromString(nbt.getString("slot0_item"))), nbt.getInt("slot0_size"));
+		ItemStack slot1 = new ItemStack(Registry.ITEM.get(SomeTechMod.fromString(nbt.getString("slot1_item"))), nbt.getInt("slot1_size"));
+		ItemStack slot2 = new ItemStack(Registry.ITEM.get(SomeTechMod.fromString(nbt.getString("slot2_item"))), nbt.getInt("slot2_size"));
+
+		inv.setItem(0, slot0);
+		inv.setItem(1, slot1);
+		inv.setItem(2, slot2);
 	}
 
 	public static class Provider implements MenuProvider {
@@ -73,7 +100,7 @@ public class CrudeConstructorEntity extends EnergizedBlockEntity {
 		@Override
 		@ParametersAreNonnullByDefault
 		public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-			return new CrudeConstructingMenu(i, entity.getInv(), inventory, ContainerLevelAccess.create(player.level, entity.getBlockPos()));
+			return new ConstructingMenu(i, entity.getInv(), inventory, ContainerLevelAccess.create(player.level, entity.getBlockPos()));
 		}
 	}
 }

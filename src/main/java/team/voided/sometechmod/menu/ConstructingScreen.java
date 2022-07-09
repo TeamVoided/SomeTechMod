@@ -9,10 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import team.voided.sometechmod.SomeTechMod;
 
-public class CrudeConstructingScreen extends AbstractContainerScreen<CrudeConstructingMenu> {
+public class ConstructingScreen extends AbstractContainerScreen<ConstructingMenu> {
 	public static final ResourceLocation TEXTURE = SomeTechMod.modLoc("textures/gui/container/crude_constructor.png");
 
-	public CrudeConstructingScreen(CrudeConstructingMenu abstractContainerMenu, Inventory inventory, Component component) {
+	public ConstructingScreen(ConstructingMenu abstractContainerMenu, Inventory inventory, Component component) {
 		super(abstractContainerMenu, inventory, component);
 	}
 
