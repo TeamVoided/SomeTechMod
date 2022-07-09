@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,8 +22,12 @@ import team.voided.quiltenergy.energy.EnergyUnits;
 import team.voided.quiltenergy.energy.IEnergyContainer;
 import team.voided.sometechmod.block.BlockRegistry;
 import team.voided.sometechmod.menu.CrudeConstructingMenu;
+import team.voided.sometechmod.recipe.CrudeConstructingRecipe;
 
-public class CrudeConstructorEntity extends EnergizedBlockEntity implements MenuProvider {
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
+
+public class CrudeConstructorEntity extends EnergizedBlockEntity {
 	private final Container inv = new SimpleContainer(3);
 
 	public CrudeConstructorEntity(BlockPos pos, BlockState state, Direction... energyTransferAllowed) {
@@ -37,26 +42,38 @@ public class CrudeConstructorEntity extends EnergizedBlockEntity implements Menu
 		super(blockEntityType, blockPos, blockState, unit, maxCapacity, energyTransferAllowed);
 	}
 
-	public static void tick(Level level, BlockPos blockPos, BlockState blockState, CrudeConstructorEntity blockEntity) {
+	public static void tick(Level level, BlockPos blockPos, BlockState blockState, CrudeConstructorEntity self) {
+		RecipeManager manager = level.getRecipeManager();
+		Optional<CrudeConstructingRecipe> recipe = manager.getRecipeFor(CrudeConstructingRecipe.Type.INSTANCE, self.getInv(), level);
 
+		recipe.ifPresent(crudeConstructingRecipe -> crudeConstructingRecipe.assemble(self.getInv()));
 	}
 
 	public static CrudeConstructorEntity create(BlockPos pos, BlockState state) {
 		return new CrudeConstructorEntity(pos, state);
 	}
 
-	@Nullable
-	@Override
-	public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-		return new CrudeConstructingMenu(i, inv, inventory, ContainerLevelAccess.create(level, worldPosition));
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.translatable("container.crude_constructor.title");
-	}
-
 	public Container getInv() {
 		return inv;
+	}
+
+	public static class Provider implements MenuProvider {
+		private final CrudeConstructorEntity entity;
+
+		public Provider(CrudeConstructorEntity entity) {
+			this.entity = entity;
+		}
+
+		@Override
+		public Component getDisplayName() {
+			return Component.translatable("container.crude_constructor.title");
+		}
+
+		@Nullable
+		@Override
+		@ParametersAreNonnullByDefault
+		public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
+			return new CrudeConstructingMenu(i, entity.getInv(), inventory, ContainerLevelAccess.create(player.level, entity.getBlockPos()));
+		}
 	}
 }

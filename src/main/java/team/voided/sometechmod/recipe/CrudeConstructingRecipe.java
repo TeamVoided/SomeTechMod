@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
+import org.quiltmc.qsl.recipe.api.serializer.QuiltRecipeSerializer;
 import team.voided.sometechmod.SomeTechMod;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -43,6 +44,7 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 	@Override
 	@ParametersAreNonnullByDefault
 	public ItemStack assemble(Container inventory) {
+		inventory.setItem(2, this.result.copy());
 		return this.result.copy();
 	}
 
@@ -88,7 +90,7 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 		public static final Type INSTANCE = new Type();
 	}
 
-	public static class Serializer implements RecipeSerializer<CrudeConstructingRecipe> {
+	public static class Serializer implements QuiltRecipeSerializer<CrudeConstructingRecipe> {
 		public static final Serializer INSTANCE = new Serializer();
 
 		@Override
@@ -141,6 +143,23 @@ public class CrudeConstructingRecipe implements Recipe<Container> {
 			recipe.slot1.toNetwork(buf);
 			recipe.slot2.toNetwork(buf);
 			buf.writeItem(recipe.result);
+		}
+
+		@Override
+		public JsonObject toJson(CrudeConstructingRecipe recipe) {
+			JsonObject json = new JsonObject();
+			JsonObject result = new JsonObject();
+
+			ResourceLocation itemLoc = Registry.ITEM.getKey(recipe.result.getItem());
+
+			result.addProperty("item", itemLoc.toString());
+			result.addProperty("result", recipe.result.getCount());
+
+			json.add("slot1", recipe.slot1.toJson());
+			json.add("slot2", recipe.slot2.toJson());
+			json.add("result", result);
+
+			return json;
 		}
 	}
 }

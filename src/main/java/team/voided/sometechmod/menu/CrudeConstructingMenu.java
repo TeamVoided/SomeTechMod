@@ -77,6 +77,8 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 			clickedSlot.setChanged();
 		}
 
+		getSlot(index).onTake(player, clickedStack);
+
 		return clickedStack;
 	}
 
@@ -199,7 +201,6 @@ public class CrudeConstructingMenu extends RecipeBookMenu<Container> {
 					}
 				}
 			}
-
 		}
 	}
 }

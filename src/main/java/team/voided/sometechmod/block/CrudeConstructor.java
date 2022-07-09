@@ -6,22 +6,21 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.BaseEntityBlock;
-import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 import team.voided.sometechmod.block.entity.CrudeConstructorEntity;
 
-public class CrudeConstructor extends BaseEntityBlock {
+import javax.annotation.ParametersAreNonnullByDefault;
+
+public class CrudeConstructor extends Block implements EntityBlock {
 	public CrudeConstructor(Properties properties) {
 		super(properties);
-	}
-
-	@Override
-	public RenderShape getRenderShape(BlockState state) {
-		return RenderShape.MODEL;
 	}
 
 	@Override
@@ -29,7 +28,7 @@ public class CrudeConstructor extends BaseEntityBlock {
 		if (!world.isClientSide) {
 			BlockEntity entity = world.getBlockEntity(pos);
 			if (entity instanceof CrudeConstructorEntity constructor) {
-				player.openMenu(constructor);
+				player.openMenu(new CrudeConstructorEntity.Provider(constructor));
 			}
 		}
 		return InteractionResult.SUCCESS;
@@ -54,7 +53,20 @@ public class CrudeConstructor extends BaseEntityBlock {
 
 	@Nullable
 	@Override
+	@ParametersAreNonnullByDefault
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
 		return CrudeConstructorEntity.create(pos, state);
+	}
+
+	@Nullable
+	@Override
+	@ParametersAreNonnullByDefault
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level world, BlockState state, BlockEntityType<T> type) {
+		return type == BlockRegistry.CRUDE_CONSTRUCTOR_ENTITY_TYPE ? (level, blockPos, blockState, blockEntity) -> CrudeConstructorEntity.tick(level, blockPos, blockState, (CrudeConstructorEntity) blockEntity): null;
+	}
+
+	@Override
+	public boolean hasDynamicShape() {
+		return true;
 	}
 }

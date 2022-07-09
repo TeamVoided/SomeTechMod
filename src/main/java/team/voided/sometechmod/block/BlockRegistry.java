@@ -22,17 +22,17 @@ public final class BlockRegistry {
 	public static final Block HEATWHEEL_BLOCK = new HeatwheelBlock(BlockBehaviour.Properties.of(Material.METAL));
 	public static final HeatwheelItem HEATWHEEL_ITEM = new HeatwheelItem(HEATWHEEL_BLOCK, new QuiltItemSettings().group(STMTabs.STM_BLOCKS_TAB), EnergyUnits.QUILT_ENERGY);
 
-	public static final CrudeConstructor CRUDE_CONSTRUCTOR = new CrudeConstructor(BlockBehaviour.Properties.of(Material.METAL));
-	public static final EnergizedBlockItem CRUDE_CONSTRUCTOR_ITEM = new EnergizedBlockItem(CRUDE_CONSTRUCTOR, new Item.Properties().tab(STMTabs.STM_BLOCKS_TAB), EnergyUnits.QUILT_ENERGY, 500_000);
+	public static final CrudeConstructor CRUDE_CONSTRUCTOR_BLOCK = new CrudeConstructor(BlockBehaviour.Properties.of(Material.METAL));
+	public static final EnergizedBlockItem CRUDE_CONSTRUCTOR_ITEM = new EnergizedBlockItem(CRUDE_CONSTRUCTOR_BLOCK, new Item.Properties().tab(STMTabs.STM_BLOCKS_TAB), EnergyUnits.QUILT_ENERGY, 500_000);
 
 	public static final BlockEntityType<HeatwheelEntity> HEATWHEEL_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(HeatwheelEntity::create, HEATWHEEL_BLOCK).build(null);
-	public static final BlockEntityType<CrudeConstructorEntity> CRUDE_CONSTRUCTOR_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(CrudeConstructorEntity::create).build(null);
+	public static final BlockEntityType<CrudeConstructorEntity> CRUDE_CONSTRUCTOR_ENTITY_TYPE = FabricBlockEntityTypeBuilder.create(CrudeConstructorEntity::create, CRUDE_CONSTRUCTOR_BLOCK).build(null);
 
 	public static void register() {
 		Registry.register(Registry.BLOCK, SomeTechMod.modLoc("heatwheel"), HEATWHEEL_BLOCK);
 		Registry.register(Registry.ITEM, SomeTechMod.modLoc("heatwheel"), HEATWHEEL_ITEM);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, SomeTechMod.modLoc("heatwheel"), HEATWHEEL_ENTITY_TYPE);
-		Registry.register(Registry.BLOCK, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR);
+		Registry.register(Registry.BLOCK, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR_BLOCK);
 		Registry.register(Registry.ITEM, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR_ITEM);
 		Registry.register(Registry.BLOCK_ENTITY_TYPE, SomeTechMod.modLoc("crude_constructor"), CRUDE_CONSTRUCTOR_ENTITY_TYPE);
 	}
